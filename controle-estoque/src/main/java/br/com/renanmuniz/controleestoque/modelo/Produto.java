@@ -2,6 +2,7 @@ package br.com.renanmuniz.controleestoque.modelo;
 
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -11,6 +12,10 @@ public class Produto {
     private Long id;
 
     private String nome;
+
+    private LocalDateTime dataCadastro;
+
+    private LocalDateTime dataAlteracao;
 
     @ManyToOne
     private Fornecedor fornecedor;
@@ -37,6 +42,22 @@ public class Produto {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public LocalDateTime getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(LocalDateTime dataCadastro) {
+        this.dataCadastro = dataCadastro;
+    }
+
+    public LocalDateTime getDataAlteracao() {
+        return dataAlteracao;
+    }
+
+    public void setDataAlteracao(LocalDateTime dataAlteracao) {
+        this.dataAlteracao = dataAlteracao;
     }
 
     public Fornecedor getFornecedor() {
