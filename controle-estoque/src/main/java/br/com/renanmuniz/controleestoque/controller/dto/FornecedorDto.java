@@ -1,23 +1,22 @@
 package br.com.renanmuniz.controleestoque.controller.dto;
 
+import br.com.renanmuniz.controleestoque.modelo.Fornecedor;
 import br.com.renanmuniz.controleestoque.modelo.Produto;
 import org.springframework.data.domain.Page;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-public class ProdutoDto {
+public class FornecedorDto {
 
     private Long id;
+
     private String nome;
 
-    public ProdutoDto(Produto produto) {
-        this.id = produto.getId();
-        this.nome = produto.getNome();
+    public FornecedorDto(Fornecedor fornecedor) {
+        this.id = fornecedor.getId();
+        this.nome = fornecedor.getNome();
     }
 
-    public static Page<ProdutoDto> converter(Page<Produto> produtos) {
-        return produtos.map(ProdutoDto::new);
+    public static Page<FornecedorDto> converter(Page<Fornecedor> fornecedores) {
+        return fornecedores.map(FornecedorDto::new);
     }
 
     public Long getId() {
