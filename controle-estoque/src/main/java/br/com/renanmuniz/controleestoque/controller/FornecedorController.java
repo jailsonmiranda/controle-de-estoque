@@ -2,11 +2,8 @@ package br.com.renanmuniz.controleestoque.controller;
 
 
 import br.com.renanmuniz.controleestoque.controller.dto.FornecedorDto;
-import br.com.renanmuniz.controleestoque.controller.dto.ProdutoDto;
 import br.com.renanmuniz.controleestoque.controller.form.FornecedorForm;
-import br.com.renanmuniz.controleestoque.controller.form.ProdutoForm;
 import br.com.renanmuniz.controleestoque.modelo.Fornecedor;
-import br.com.renanmuniz.controleestoque.modelo.Produto;
 import br.com.renanmuniz.controleestoque.repository.FornecedorRepository;
 import br.com.renanmuniz.controleestoque.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,9 +1,9 @@
-package br.com.renanmuniz.controleestoque.controller.form;
+package br.com.renanmuniz.controleestoque.controller;
 
 
 import br.com.renanmuniz.controleestoque.controller.dto.FornecedorDto;
 import br.com.renanmuniz.controleestoque.controller.dto.UsuarioDto;
-import br.com.renanmuniz.controleestoque.modelo.Fornecedor;
+import br.com.renanmuniz.controleestoque.controller.form.UsuarioForm;
 import br.com.renanmuniz.controleestoque.modelo.Usuario;
 import br.com.renanmuniz.controleestoque.repository.FornecedorRepository;
 import br.com.renanmuniz.controleestoque.repository.ProdutoRepository;
