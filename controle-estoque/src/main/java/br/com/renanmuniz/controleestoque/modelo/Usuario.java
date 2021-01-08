@@ -20,6 +20,11 @@ public class Usuario {
     public Usuario() {
     }
 
+    public Usuario(String nome, String senha) {
+        this.nome = nome;
+        this.senha = senha;
+    }
+
     public Long getId() {
         return id;
     }
