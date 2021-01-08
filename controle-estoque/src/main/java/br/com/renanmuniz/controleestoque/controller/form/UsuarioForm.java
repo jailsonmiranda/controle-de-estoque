@@ -1,10 +1,8 @@
 package br.com.renanmuniz.controleestoque.controller.form;
 
-import br.com.renanmuniz.controleestoque.modelo.Fornecedor;
-import br.com.renanmuniz.controleestoque.modelo.Produto;
+import br.com.renanmuniz.controleestoque.modelo.Perfil;
 import br.com.renanmuniz.controleestoque.modelo.Usuario;
-import br.com.renanmuniz.controleestoque.repository.FornecedorRepository;
-import br.com.renanmuniz.controleestoque.repository.ProdutoRepository;
+import br.com.renanmuniz.controleestoque.repository.PerfilRepository;
 import br.com.renanmuniz.controleestoque.repository.UsuarioRepository;
 
 import javax.validation.constraints.NotEmpty;
@@ -19,6 +17,10 @@ public class UsuarioForm {
     @NotNull
     @NotEmpty
     private String senha;
+
+    @NotNull
+    @NotEmpty
+    private String nomePerfil;
 
     public String getNome() {
         return nome;
@@ -36,14 +38,26 @@ public class UsuarioForm {
         this.senha = senha;
     }
 
-    public Usuario converter() {
-        return new Usuario(nome,senha);
+    public String getNomePerfil() {
+        return nomePerfil;
     }
 
-    public Usuario atualizar(Long id, UsuarioRepository usuarioRepository) {
+    public void setNomePerfil(String nomePerfil) {
+        this.nomePerfil = nomePerfil;
+    }
+
+    public Usuario converter(PerfilRepository repository) {
+        Perfil perfil = repository.findByNome(nomePerfil);
+        return new Usuario(nome,senha, perfil);
+    }
+
+    public Usuario atualizar(Long id, UsuarioRepository usuarioRepository, PerfilRepository perfilRepository) {
         Usuario usuario = usuarioRepository.getOne(id);
         usuario.setNome(this.nome);
         usuario.setSenha(this.senha);
+
+        Perfil perfil = perfilRepository.findByNome(nomePerfil);
+        usuario.setPerfil(perfil);
         return usuario;
     }
 }

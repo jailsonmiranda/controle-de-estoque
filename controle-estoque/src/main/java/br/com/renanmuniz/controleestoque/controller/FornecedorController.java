@@ -27,9 +27,6 @@ import java.util.Optional;
 public class FornecedorController {
 
     @Autowired
-    private ProdutoRepository produtoRepository;
-
-    @Autowired
     private FornecedorRepository fornecedorRepository;
 
     /**

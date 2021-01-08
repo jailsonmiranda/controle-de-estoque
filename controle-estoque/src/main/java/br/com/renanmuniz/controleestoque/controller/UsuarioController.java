@@ -1,12 +1,10 @@
 package br.com.renanmuniz.controleestoque.controller;
 
 
-import br.com.renanmuniz.controleestoque.controller.dto.FornecedorDto;
 import br.com.renanmuniz.controleestoque.controller.dto.UsuarioDto;
 import br.com.renanmuniz.controleestoque.controller.form.UsuarioForm;
 import br.com.renanmuniz.controleestoque.modelo.Usuario;
-import br.com.renanmuniz.controleestoque.repository.FornecedorRepository;
-import br.com.renanmuniz.controleestoque.repository.ProdutoRepository;
+import br.com.renanmuniz.controleestoque.repository.PerfilRepository;
 import br.com.renanmuniz.controleestoque.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,13 +27,10 @@ import java.util.Optional;
 public class UsuarioController {
 
     @Autowired
-    private ProdutoRepository produtoRepository;
-
-    @Autowired
-    private FornecedorRepository fornecedorRepository;
-
-    @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private PerfilRepository perfilRepository;
 
     /**
      *
@@ -65,7 +60,7 @@ public class UsuarioController {
     @Transactional
     public ResponseEntity<UsuarioDto> cadastrar(@RequestBody @Valid UsuarioForm form,
                                                    UriComponentsBuilder uriBuilder) {
-        Usuario usuario = form.converter();
+        Usuario usuario = form.converter(perfilRepository);
         usuario.setDataCadastro(LocalDateTime.now());
         usuarioRepository.save(usuario);
 
@@ -99,7 +94,7 @@ public class UsuarioController {
     public ResponseEntity<UsuarioDto> atualizar(@PathVariable Long id, @RequestBody @Valid UsuarioForm form) {
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
         if(usuarioOptional.isPresent()) {
-            Usuario usuario = form.atualizar(id, usuarioRepository);
+            Usuario usuario = form.atualizar(id, usuarioRepository, perfilRepository);
             usuario.setDataAlteracao(LocalDateTime.now());
             return ResponseEntity.ok(new UsuarioDto(usuario));
         }

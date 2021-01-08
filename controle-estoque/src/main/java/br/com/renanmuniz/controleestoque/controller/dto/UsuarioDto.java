@@ -1,6 +1,5 @@
 package br.com.renanmuniz.controleestoque.controller.dto;
 
-import br.com.renanmuniz.controleestoque.modelo.Produto;
 import br.com.renanmuniz.controleestoque.modelo.Usuario;
 import org.springframework.data.domain.Page;
 

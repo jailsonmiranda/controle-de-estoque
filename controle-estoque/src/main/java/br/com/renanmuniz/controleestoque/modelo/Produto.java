@@ -2,6 +2,7 @@ package br.com.renanmuniz.controleestoque.modelo;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 
@@ -10,14 +11,12 @@ public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String nome;
-
     private LocalDateTime dataCadastro;
-
     private LocalDateTime dataAlteracao;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @NotNull
     private Fornecedor fornecedor;
 
     public Produto() {

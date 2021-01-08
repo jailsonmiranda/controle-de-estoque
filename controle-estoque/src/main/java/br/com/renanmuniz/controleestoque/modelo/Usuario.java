@@ -1,9 +1,9 @@
 package br.com.renanmuniz.controleestoque.modelo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
@@ -16,13 +16,18 @@ public class Usuario {
     private LocalDateTime dataCadastro;
     private LocalDateTime dataAlteracao;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @NotNull
+    private Perfil perfil;
+
     // Construtor padrão para JPA
     public Usuario() {
     }
 
-    public Usuario(String nome, String senha) {
+    public Usuario(String nome, String senha, Perfil perfil) {
         this.nome = nome;
         this.senha = senha;
+        this.perfil = perfil;
     }
 
     public Long getId() {
@@ -63,5 +68,13 @@ public class Usuario {
 
     public void setDataAlteracao(LocalDateTime dataAlteracao) {
         this.dataAlteracao = dataAlteracao;
+    }
+
+    public Perfil getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
     }
 }
