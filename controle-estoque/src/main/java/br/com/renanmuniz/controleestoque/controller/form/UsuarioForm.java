@@ -48,7 +48,7 @@ public class UsuarioForm {
 
     public Usuario converter(PerfilRepository repository) {
         Perfil perfil = repository.findByNome(nomePerfil);
-        return new Usuario(nome,senha, perfil);
+        return new Usuario(nome,senha);
     }
 
     public Usuario atualizar(Long id, UsuarioRepository usuarioRepository, PerfilRepository perfilRepository) {
@@ -57,7 +57,6 @@ public class UsuarioForm {
         usuario.setSenha(this.senha);
 
         Perfil perfil = perfilRepository.findByNome(nomePerfil);
-        usuario.setPerfil(perfil);
         return usuario;
     }
 }

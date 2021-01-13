@@ -1,13 +1,18 @@
 package br.com.renanmuniz.controleestoque.modelo;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
-public class Usuario {
+public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -16,18 +21,17 @@ public class Usuario {
     private LocalDateTime dataCadastro;
     private LocalDateTime dataAlteracao;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @NotNull
-    private Perfil perfil;
+    private List<Perfil> perfis;
 
     // Construtor padrão para JPA
     public Usuario() {
     }
 
-    public Usuario(String nome, String senha, Perfil perfil) {
+    public Usuario(String nome, String senha) {
         this.nome = nome;
         this.senha = senha;
-        this.perfil = perfil;
     }
 
     public Long getId() {
@@ -70,11 +74,46 @@ public class Usuario {
         this.dataAlteracao = dataAlteracao;
     }
 
-    public Perfil getPerfil() {
-        return perfil;
+    public List<Perfil> getPerfis() {
+        return perfis;
     }
 
-    public void setPerfil(Perfil perfil) {
-        this.perfil = perfil;
+    public void setPerfis(List<Perfil> perfis) {
+        this.perfis = perfis;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public String getPassword() {
+        return this.senha;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.nome;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

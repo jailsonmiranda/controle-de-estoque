@@ -1,5 +1,7 @@
 package br.com.renanmuniz.controleestoque.modelo;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,7 +12,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-public class Perfil {
+public class Perfil implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -55,5 +57,11 @@ public class Perfil {
 
     public void setDataAlteracao(LocalDateTime dataAlteracao) {
         this.dataAlteracao = dataAlteracao;
+    }
+
+
+    @Override
+    public String getAuthority() {
+        return nome;
     }
 }
