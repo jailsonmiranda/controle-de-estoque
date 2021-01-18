@@ -4,9 +4,11 @@ import br.com.renanmuniz.controleestoque.modelo.Perfil;
 import br.com.renanmuniz.controleestoque.modelo.Usuario;
 import br.com.renanmuniz.controleestoque.repository.PerfilRepository;
 import br.com.renanmuniz.controleestoque.repository.UsuarioRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 public class UsuarioForm {
 
@@ -47,16 +49,18 @@ public class UsuarioForm {
     }
 
     public Usuario converter(PerfilRepository repository) {
-        Perfil perfil = repository.findByNome(nomePerfil);
-        return new Usuario(nome,senha);
+        List<Perfil> perfil = repository.findByNome("ROLE_" + nomePerfil.toUpperCase());
+        String senhaCript = new BCryptPasswordEncoder().encode(this.senha);
+        return new Usuario(nome,senhaCript,perfil);
     }
 
     public Usuario atualizar(Long id, UsuarioRepository usuarioRepository, PerfilRepository perfilRepository) {
         Usuario usuario = usuarioRepository.getOne(id);
         usuario.setNome(this.nome);
-        usuario.setSenha(this.senha);
+        usuario.setSenha(new BCryptPasswordEncoder().encode(this.senha));
 
-        Perfil perfil = perfilRepository.findByNome(nomePerfil);
+        List<Perfil> perfil = perfilRepository.findByNome("ROLE_" + nomePerfil.toUpperCase());
+        usuario.setPerfis(perfil);
         return usuario;
     }
 }

@@ -46,10 +46,14 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 //.antMatchers(HttpMethod.GET,"/produtos").permitAll()
                 .antMatchers(HttpMethod.POST,"/auth").permitAll()
+                .antMatchers(HttpMethod.POST,"/usuarios").hasAnyRole("ADMIN,GERENTE")
+                .antMatchers(HttpMethod.PUT,"/usuarios/*").hasAnyRole("ADMIN, GERENTE")
+                .antMatchers(HttpMethod.DELETE,"/usuarios/*").hasAnyRole("ADMIN, GERENTE")
                 .anyRequest().authenticated()
                 .and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class);
+                .and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, usuarioRepository),
+                    UsernamePasswordAuthenticationFilter.class);
     }
 
 
@@ -60,7 +64,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**");
     }
 
-    public static void main(String[] args) {
-        System.out.println(new BCryptPasswordEncoder().encode("admin"));
-    }
+//    public static void main(String[] args) {
+//        System.out.println(new BCryptPasswordEncoder().encode("admin"));
+//    }
 }
