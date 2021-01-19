@@ -17,6 +17,8 @@ public class Movimentacao {
 
     private LocalDateTime DataMovimentacao;
 
+    private LocalDateTime DataAlteracao;
+
     public Movimentacao() {
     }
 
@@ -55,5 +57,13 @@ public class Movimentacao {
 
     public void setDataMovimentacao(LocalDateTime dataMovimentacao) {
         DataMovimentacao = dataMovimentacao;
+    }
+
+    public LocalDateTime getDataAlteracao() {
+        return DataAlteracao;
+    }
+
+    public void setDataAlteracao(LocalDateTime dataAlteracao) {
+        DataAlteracao = dataAlteracao;
     }
 }

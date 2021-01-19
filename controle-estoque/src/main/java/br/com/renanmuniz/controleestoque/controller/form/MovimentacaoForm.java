@@ -2,6 +2,7 @@ package br.com.renanmuniz.controleestoque.controller.form;
 
 import br.com.renanmuniz.controleestoque.modelo.Movimentacao;
 import br.com.renanmuniz.controleestoque.modelo.Produto;
+import br.com.renanmuniz.controleestoque.repository.MovimentacaoRepository;
 import br.com.renanmuniz.controleestoque.repository.ProdutoRepository;
 
 import javax.validation.constraints.NotNull;
@@ -39,5 +40,16 @@ public class MovimentacaoForm {
             return new Movimentacao(produto,quantidade);
         }
         throw new NoSuchElementException(produtoOptional.toString());
+    }
+
+    public Movimentacao atualizar(Long id, MovimentacaoRepository movimentacaoRepository,
+                                  ProdutoRepository produtoRepository) {
+        Movimentacao movimentacao = movimentacaoRepository.getOne(id);
+
+        movimentacao.setQuantidade(this.quantidade);
+        Produto produto = produtoRepository.findById(this.produto_id).get();
+        movimentacao.setProduto(produto);
+
+        return movimentacao;
     }
 }

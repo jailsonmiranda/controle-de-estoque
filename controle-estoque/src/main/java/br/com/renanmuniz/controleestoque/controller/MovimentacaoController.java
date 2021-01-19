@@ -39,24 +39,24 @@ public class MovimentacaoController {
     @Autowired
     private MovimentacaoRepository movimentacaoRepository;
 
-//    /**
-//     *
-//     * @param nomeProduto
-//     * @return
-//     */
-//    @GetMapping
-//    public Page<ProdutoDto> listar(@RequestParam(required = false) String nomeProduto,
-//                                   @PageableDefault(sort="id", direction = Sort.Direction.ASC, page = 0, size = 10)
-//                                           Pageable paginacao) {
-//        if(nomeProduto == null) {
-//            Page<Produto> produtos = produtoRepository.findAll(paginacao);
-//            return ProdutoDto.converter(produtos);
-//        } else {
-//            Page<Produto> produtos = produtoRepository.findByNome(nomeProduto, paginacao);
-//            return ProdutoDto.converter(produtos);
-//        }
-//    }
-//
+    /**
+     *
+     * @param
+     * @return
+     */
+    @GetMapping
+    public Page<MovimentacaoDto> listar(@RequestParam(required = false) Long produtoId,
+                                   @PageableDefault(sort="id", direction = Sort.Direction.ASC, page = 0, size = 10)
+                                           Pageable paginacao) {
+        if(produtoId == null) {
+            Page<Movimentacao> movimentacoes = movimentacaoRepository.findAll(paginacao);
+            return MovimentacaoDto.converter(movimentacoes);
+        } else {
+            Page<Movimentacao> movimentacoes = movimentacaoRepository.findByProduto_Id(produtoId, paginacao);
+            return MovimentacaoDto.converter(movimentacoes);
+        }
+    }
+
     /**
      *
      * @param form
@@ -74,54 +74,54 @@ public class MovimentacaoController {
         URI uri = uriBuilder.path("/movimentacoes/{id}").buildAndExpand(movimentacao.getId()).toUri();
         return ResponseEntity.created(uri).body(new MovimentacaoDto(movimentacao));
     }
-//
-//    /**
-//     *
-//     * @param id
-//     * @return
-//     */
-//    @GetMapping("/{id}")
-//    public ResponseEntity<ProdutoDto> detalhar(@PathVariable Long id) {
-//        Optional<Produto> produtoOptional = produtoRepository.findById(id);
-//        if(produtoOptional.isPresent()) {
-//            return ResponseEntity.ok(new ProdutoDto(produtoOptional.get()));
-//        }
-//        return ResponseEntity.notFound().build();
-//    }
-//
-//
-//    /**
-//     *
-//     * @param id
-//     * @param form
-//     * @return
-//     */
-//    @PutMapping("/{id}")
-//    @Transactional
-//    public ResponseEntity<ProdutoDto> atualizar(@PathVariable Long id, @RequestBody @Valid ProdutoForm form) {
-//        Optional<Produto> produtoOptional = produtoRepository.findById(id);
-//        if(produtoOptional.isPresent()) {
-//            Produto produto = form.atualizar(id, produtoRepository, fornecedorRepository);
-//            produto.setDataAlteracao(LocalDateTime.now());
-//            return ResponseEntity.ok(new ProdutoDto(produto));
-//        }
-//        return ResponseEntity.notFound().build();
-//    }
-//
-//    /**
-//     *
-//     * @param id
-//     * @return
-//     */
-//    @DeleteMapping("/{id}")
-//    @Transactional
-//    public ResponseEntity<?> remover(@PathVariable Long id) {
-//        Optional<Produto> produtoOptional = produtoRepository.findById(id);
-//        if(produtoOptional.isPresent()) {
-//            produtoRepository.deleteById(id);
-//            return ResponseEntity.ok().build();
-//        }
-//        return ResponseEntity.notFound().build();
-//    }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<MovimentacaoDto> detalhar(@PathVariable Long id) {
+        Optional<Movimentacao> movimentacaoOptional = movimentacaoRepository.findById(id);
+        if(movimentacaoOptional.isPresent()) {
+            return ResponseEntity.ok(new MovimentacaoDto(movimentacaoOptional.get()));
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+
+    /**
+     *
+     * @param id
+     * @param form
+     * @return
+     */
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<MovimentacaoDto> atualizar(@PathVariable Long id, @RequestBody @Valid MovimentacaoForm form) {
+        Optional<Movimentacao> movimentacaoOptional = movimentacaoRepository.findById(id);
+        if(movimentacaoOptional.isPresent()) {
+            Movimentacao movimentacao = form.atualizar(id, movimentacaoRepository, produtoRepository);
+            movimentacao.setDataAlteracao(LocalDateTime.now());
+            return ResponseEntity.ok(new MovimentacaoDto(movimentacao));
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<?> remover(@PathVariable Long id) {
+        Optional<Movimentacao> movimentacaoOptional = movimentacaoRepository.findById(id);
+        if(movimentacaoOptional.isPresent()) {
+            movimentacaoRepository.deleteById(id);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
 
 }
