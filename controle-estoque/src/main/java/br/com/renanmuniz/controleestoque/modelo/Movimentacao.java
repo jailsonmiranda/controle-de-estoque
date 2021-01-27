@@ -2,7 +2,6 @@ package br.com.renanmuniz.controleestoque.modelo;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 public class Movimentacao {

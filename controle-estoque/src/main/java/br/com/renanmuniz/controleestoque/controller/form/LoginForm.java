@@ -2,9 +2,17 @@ package br.com.renanmuniz.controleestoque.controller.form;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class LoginForm {
 
+    @NotNull
+    @NotEmpty
     private String nome;
+
+    @NotNull
+    @NotEmpty
     private String senha;
 
     public String getNome() {
